@@ -1,0 +1,13 @@
+1. Establish daily goals for each team member
+2. Break daily goals down to hourly sprints
+3. At the start of each hour, have a 2 minute scrum for each person to say what they are working on for that hour
+4. At the end of each hour, have a 5 minute scrum to identify: 
+  A. what each person has accomplished, 
+  B. Any conflicts in dependencies between different group members
+  C. Any areas where effort levels need to be adjusted
+  D. Any areas where we can help with debugging/learning
+  
+Daily Morning standup 30 minutes after hacking time begins
+Daily evening standup following dinner
+  
+We will follow the CONTRIBUTING.md process strictly, except for updates to the docs. 
