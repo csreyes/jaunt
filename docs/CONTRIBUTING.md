@@ -107,7 +107,7 @@ The feature you're working on is perfect, and the code you've written would make
     *   95f4a52 2015-01-24 | Merge pull request #27 (upstream/master)
     ```
 
-1. We'll be rebasing to this point - think of it as the base under a stack of commits you'll be squishing together. To do this, use:
+1. We'll be rebasing to this point - think of it as the base under a stack of commits you'll be squashing together. To do this, use:
 
     ```bash
     git rebase -i `hash of (upstream/master)`
@@ -121,12 +121,12 @@ The feature you're working on is perfect, and the code you've written would make
     pick ba5599a Even more cool stuff
     ```
 
-1. Change every commit but the first to 'squish' (or 's' for short), winding up with something like this:
+1. Change every commit but the first to 'squash' (or 's' for short), winding up with something like this:
 
     ```sh
     pick d603a49 Sample Commit
-    squish c294daf Some cool new stuff
-    squish ba5599a Even more cool stuff
+    squash c294daf Some cool new stuff
+    squash ba5599a Even more cool stuff
     ```
 
 1. If all goes well, another text editor will open prompting you for a new commit message for the entire 'squashed' commit. Rename it appropriately, and if all goes well you'll have a new history with all recent commits rolled into one, ready for a pull request.
