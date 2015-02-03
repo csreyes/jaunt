@@ -7,9 +7,15 @@ Jaunt lets local explorers find walking adventures that fit their fancy.
 
 ## Team
 
-  - __Product Owner__: [Kiran Rao](https://github.com/kranrao) 
-  - __Scrum Master__: [Andy Coenen](https://github.com/cannoneyed)
-  - __Development Team Members__: [Zachary Lopez](https://github.com/zdlopez), [Benoy Maniara](https://github.com/maniarab)
+  - __Original Product Owner__: [Kiran Rao](https://github.com/kranrao) 
+  - __Original Scrum Master__: [Andy Coenen](https://github.com/cannoneyed)
+  - __Original Development Team Members__: [Zachary Lopez](https://github.com/zdlopez), [Benoy Maniara](https://github.com/maniarab)
+
+  - __Legacy Product Owner__: [Christian Reyes](https://github.com/csreyes) 
+  - __Legacy Scrum Master__: [Preston Parry](https://github.com/climbsrocks)
+  - __Legacy Development Team Members__: [Matt Conrad](https://github.com/mmconrad), [Alan Sun](https://github.com/zheshishei)
+  
+
 
 ## Development
 
