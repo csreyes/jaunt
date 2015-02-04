@@ -81,6 +81,7 @@ var JauntSchema = new mongoose.Schema({
       name : String,
       description : String,
       photoUrl: String,
+      audioUrl: String,
       tags : [String],
       duration : {
          text : String,

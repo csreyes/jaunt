@@ -64,6 +64,7 @@ Jaunt = {
       name : String,
       description : String,
       photoUrl: String,
+      audioUrl: String,
       tags : [String] (lowercase!),
       duration : {
          text : String (eg '1 hour'),

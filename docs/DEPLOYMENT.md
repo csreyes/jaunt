@@ -9,6 +9,7 @@ Jaunt is built locally using gulp. To install gulp, npm modules, and bower compo
 ```sh
 npm install
 bower install
+brew install mongodb
 ```
 
 After installing dependencies, set up the environment variables necessary for the app by creating a file called '.env'. This file should contain a few variable declarations:

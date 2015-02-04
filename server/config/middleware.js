@@ -16,7 +16,7 @@ module.exports = function (app, express) {
   // app.use(express.static(__dirname + '/../../APITesting/'));
 
 
-  app.use('/api/users', userRouter); // use user router for all user request
+  // app.use('/api/users', userRouter); // currently the user model isn't being used for anything
   app.use('/api/yelp', yelpRouter);
 
 
@@ -28,7 +28,7 @@ module.exports = function (app, express) {
   app.use(helpers.errorHandler);
 
   // inject our routers into their respective route files
-  require('../users/userRoutes.js')(userRouter);
+  // require('../users/userRoutes.js')(userRouter); //again, not using the user router currently
   require('../jaunts/jauntRoutes.js')(jauntRouter);
   require('../yelp/yelpRoutes.js')(yelpRouter);
 };
