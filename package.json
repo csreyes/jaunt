@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --browsers PhantomJS"
-  },
-  "scripts": {
-      "postinstall": "bower install && gulp deploy"
+    "postinstall": "bower install && gulp deploy"
   },
   "author": "",
   "license": "ISC",

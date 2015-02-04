@@ -22,7 +22,7 @@ module.exports = app;
 
   middleware.js requires all epxpress middlware and sets it up
   our authentication is set up there as well
-  we also create individual routers for are two main features, links and users
+  we also create individual routers for the two main features: links and users
   each feature has it's own folder with a model, controller, and route file
     the respective file is requierd in middlware.js and injected with its mini router
     that route file then requires the respective controller and sets up all the routes

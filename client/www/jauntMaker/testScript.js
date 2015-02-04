@@ -141,6 +141,7 @@ function Init() {
             name: name,
             description: description,
             photoUrl: photoUrl,
+            audioUrl: audioUrl,
             tags: tags,
             duration: duration,
             location: {coordinates:[longitude, latitude]}
@@ -267,6 +268,7 @@ var obtainStopInfo = function(obj){
 
   $("#modalForm").append("<p>Description: <textarea id='myDescription' name='description' cols=48 rows=4></textarea></p>");
   $("#modalForm").append("<p>Photo URL: <input id='myURL' type='url' size='100'></input></p>");
+  $("#modalForm").append("<p>Audio URL: <input id='myURL' type='url' size='100'></input></p>");
   $("#modalForm").append("<p>Tags: <input id='myTag' type='text' size='40'></input></p>");
   $("#modalForm").append("<p>Duration (s): <input id='myDuration' type='text' size='10'></input></p>");
   $("#modalForm").append("<br>");
