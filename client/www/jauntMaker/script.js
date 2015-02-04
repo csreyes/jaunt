@@ -1,3 +1,4 @@
+//To our knowledge, this is currently not used anywhere
 $(function(){
 
 var map, path = new google.maps.MVCArray(),
