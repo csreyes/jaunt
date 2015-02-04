@@ -24,6 +24,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   $stateProvider
 
+
+  // splash page 
+    // direct away from after .6 sec
+  .state('home', {
+    url: '/home',
+    templateUrl: 'templates/home.html',
+    controller: 'HomeCtrl'
+  })
+  
   // setup an abstract state for the tabs directive
   .state('tab', {
     url: "/tab",
@@ -69,6 +78,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
       }
     })
+
   .state('tab.account', {
     url: '/account',
     views: {
@@ -77,11 +87,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller: 'AccountCtrl'
       }
     }
-  })
-  .state('home', {
-    url: '/home',
-    templateUrl: 'templates/home.html',
-    controller: 'HomeCtrl'
   });
 
   // if none of the above states are matched, use this as the fallback

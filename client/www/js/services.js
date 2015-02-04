@@ -62,7 +62,7 @@ angular.module('starter.services')
     getAllPolys : function(jaunts){
       var colors = ['red', 'blue', 'green', 'orange', 'purple']; 
       var polys = [];
-      
+
       for(var i = 0; i< jaunts.length; i++){
         var linePoints = [];
         for(var j = 0; j < jaunts[i].steps.length; j++){
