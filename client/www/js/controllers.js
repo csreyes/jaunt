@@ -44,6 +44,7 @@ angular.module('starter.controllers', [])
     
     $scope.userLoc = {};
     $scope.userMarker = {};
+    $scope.watchId = null;
     $scope.polys = [];
     $scope.markers = [];
     $scope.infowindows = [];
@@ -51,14 +52,16 @@ angular.module('starter.controllers', [])
     $scope.query = {};  //user queries
     $scope.queryObj = {}; //sent to the db
 
+
     $scope.centerOnMe()
     .then(function (pos) {
-      $scope.pos = pos;
+      // $scope.pos = pos;
       $scope.placeUser();
       $scope.center = $scope.map.getCenter();
       $scope.show(0);
+      // call moveUser every 10seconds
+      // setInterval($scope.moveUser(), 10000);
     })
-
   };
 
   $scope.findUser = function(callback) {
@@ -68,9 +71,7 @@ angular.module('starter.controllers', [])
     });
   };
 
-  $scope.moveUser = function() {
-    $scope.findUser( $scope.userMarker.setPosition(position) );
-  }
+
 
   $scope.placeUser = function() {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -82,9 +83,18 @@ angular.module('starter.controllers', [])
         icon: '/img/jaunty_tiny.png',
       });
       // $scope.markers.push(userMarker);
+      $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
     });
   };
 
+  $scope.moveUser = function() {
+    $scope.findUser( function(pos) {
+      console.log('moveUser');
+      console.log(pos);
+      console.log($scope.userMaker);
+      $scope.userMarker.setPosition(pos); 
+    });
+  };
 
 
   $scope.clickCrosshairs = function (){
@@ -183,7 +193,7 @@ angular.module('starter.controllers', [])
 
     hideMarkers();
 
-    Jaunts.selectJaunts(query).then(function(data){
+    Jaunts.selectJaunts(query).then(function(data) {
       setTimeout( $ionicLoading.hide, 500);
 
       $scope.jaunts = data.data;
@@ -196,6 +206,9 @@ angular.module('starter.controllers', [])
       showMarkers();
       
     });
+
+    // Remove the location listener calling moveUser()
+    navigator.geolocation.clearWatch($scope.watchId);
   };
 
   var findUser = function(callback) {

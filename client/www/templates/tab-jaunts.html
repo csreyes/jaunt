@@ -10,7 +10,7 @@
 
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="jaunt in $root.jaunts" type="item-text-wrap" href="#/tab/jaunts/{{jaunt._id}}">
+      <ion-item class="item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="jaunt in $root.jaunts track by $index" type="item-text-wrap" href="#/tab/jaunts/{{jaunt._id}}">
         <img src="/img/jaunt-logo.png">  
         <div class="row">
           <div class="col">
@@ -24,7 +24,7 @@
                 <span class="ion-clock">
                   {{jaunt.duration.text}} fancying:
                 </span>
-                <span ng-repeat="tag in jaunt.meta.tags">
+                <span ng-repeat="tag in jaunt.meta.tags track by $index">
                   {{tag}},
                 </span>
                  fun stuff
