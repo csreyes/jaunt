@@ -2,21 +2,22 @@
 <ion-view view-title="Map">
 
   <!-- filter -->
-  <ion-nav-buttons side="primary">
-    <a href="#" ng-click="openModal()"><button class="button button-icon icon ion-search">Filter</button></a>
-  </ion-nav-buttons>
+  <!-- <ion-nav-buttons side="primary"> -->
+    <!-- <a href="#" ng-click="openModal()"><button class="button button-icon icon ion-search">Filter</button></a> -->
+  <!-- </ion-nav-buttons> --> 
+
 
   <!-- list view -->
-  <ion-nav-buttons side="secondary">
+  <ion-nav-buttons side="primary">
     <a href="#/tab/jaunts"><button class="button button-icon icon ion-navicon">List</button></a>
   </ion-nav-buttons>
 
   <ion-content scroll="false">
-  
+
     <!-- <map on-create="mapCreated(map)"></map> -->
     <div id="center" ng-click="clickCrosshairs()"></div>
 
     <div id="map" data-tap-disabled="true"></div>
-    
+
   </ion-content>
 </ion-view>

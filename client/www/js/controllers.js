@@ -387,20 +387,33 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HomeCtrl', function($scope, $state) {
+.controller('HomeCtrl', function($rootScope, $scope, $state, Jaunts) {
   $scope.settings = {
     enableFriends: true
   };
 
-  $scope.jauntTo = function () {
-    $state.go('tab.map');
-  };
+  // $scope.jauntTo = function () {
+    // $state.go('tab.map');
+  // };
 
-  $scope.jauntFrom = function () {
-    $state.go('tab.map');
-  }
+  // $scope.jauntFrom = function () {
+    // $state.go('tab.map');
+  // }
   $scope.explore = function () {
     $state.go('tab.jaunts');
+
+
+    var query = {};
+    Jaunts.selectJaunts(query).then(function(data){
+      $rootScope.jaunts = data.data;
+    });
+      // setTimeout( $ionicLoading.hide, 500);
+      // $scope.jaunts = data.data;
+      //places on rootscope to persist across controllers
+      // $scope.polys = Jaunts.getAllPolys($scope.jaunts);
+      // addToMap($scope.polys);
+      // showMarkers();
+
   }
 
 });

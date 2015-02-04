@@ -1,5 +1,7 @@
 #environment variables (api keys, etc)
 .env
+git-contributing-workflow
+legacy-features
 
 # Logs
 logs
