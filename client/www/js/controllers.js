@@ -40,8 +40,10 @@ angular.module('starter.controllers', [])
                  "stylers":[{"color":"#C6E2FF"}]}]
     };
 
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);  
-
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions); 
+    
+    $scope.userLoc = {};
+    $scope.userMarker = {};
     $scope.polys = [];
     $scope.markers = [];
     $scope.infowindows = [];
@@ -51,11 +53,39 @@ angular.module('starter.controllers', [])
 
     $scope.centerOnMe()
     .then(function (pos) {
+      $scope.pos = pos;
+      $scope.placeUser();
       $scope.center = $scope.map.getCenter();
       $scope.show(0);
     })
 
   };
+
+  $scope.findUser = function(callback) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      $scope.userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+      callback(position);
+    });
+  };
+
+  $scope.moveUser = function() {
+    $scope.findUser( $scope.userMarker.setPosition(position) );
+  }
+
+  $scope.placeUser = function() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      $scope.userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+      $scope.userMarker = new google.maps.Marker({
+        position: $scope.userLoc,
+        map: $scope.map,
+        title: 'You are here',
+        icon: '/img/jaunty_tiny.png',
+      });
+      // $scope.markers.push(userMarker);
+    });
+  };
+
+
 
   $scope.clickCrosshairs = function (){
     $scope.center = $scope.map.getCenter();
@@ -167,6 +197,14 @@ angular.module('starter.controllers', [])
       
     });
   };
+
+  var findUser = function(callback) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+        callback(position);
+      });
+    };
+
 
 
   var hideMarkers = function(){
