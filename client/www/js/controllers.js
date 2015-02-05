@@ -59,7 +59,8 @@ angular.module('starter.controllers', [])
       $scope.center = $scope.map.getCenter();
       $scope.show(0);
       // call moveUser every 10seconds
-      // setInterval($scope.moveUser(), 10000);
+      // setTimeout(function() {setInterval( $scope.moveUser(), 10000)} ,  );
+      
     });
     $scope.placeUser();
   };
@@ -73,7 +74,7 @@ angular.module('starter.controllers', [])
 
 
 
-  $scope.placeUser = function() {
+  $scope.placeUser = function(callback) {
     navigator.geolocation.getCurrentPosition(function(position) {
       $scope.userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
       $scope.userMarker = new google.maps.Marker({
@@ -83,16 +84,16 @@ angular.module('starter.controllers', [])
         icon: '/img/jaunty_tiny.png',
       });
       // $scope.markers.push(userMarker);
-      $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
+      setInterval( $scope.moveUser, 5000 );
+      // $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
     });
   };
 
   $scope.moveUser = function() {
-    $scope.findUser( function(pos) {
-      console.log('moveUser');
-      console.log(pos);
-      console.log($scope.userMaker);
-      $scope.userMarker.setPosition(pos); 
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      $scope.userLoc = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      $scope.userMarker.setPosition($scope.userLoc); 
+      console.log($scope.userMarker);
     });
   };
 
