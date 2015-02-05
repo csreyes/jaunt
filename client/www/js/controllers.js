@@ -314,6 +314,9 @@ angular.module('starter.controllers', [])
           }
         });
 
+        $rootScope.selectedJaunt = marker.jaunt;
+        $scope.selectedJaunt = marker.jaunt;
+
         removeFromMap($scope.stopovers);
         $scope.infowindows.forEach(function(InfoWindow) {
           InfoWindow.close();
@@ -327,7 +330,6 @@ angular.module('starter.controllers', [])
             }
           });
         }
-
         var stops = marker.stops;
         if (stops) {        
           for (var j = 0; j < stops.length; j++) {
@@ -373,6 +375,7 @@ angular.module('starter.controllers', [])
       google.maps.event.addListener($scope.map, 'click', function(event) {
           marker.setAnimation(null);
           infowindow.close();
+          $rootScope.selectedJaunt = null;
           removeFromMap($scope.polys);
           removeFromMap($scope.markers);
           removeFromMap($scope.stopovers);
