@@ -39,7 +39,7 @@ angular.module('starter.controllers', [])
       $scope.show(0);
       // call moveUser every 10seconds
       // setTimeout(function() {setInterval( $scope.moveUser(), 10000)} ,  );
-      
+
     });
     $scope.placeUser();
   };
@@ -64,14 +64,14 @@ angular.module('starter.controllers', [])
       });
       // $scope.markers.push(userMarker);
       setInterval( $scope.moveUser, 5000 );
-      // $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
+      // $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser);
     });
   };
 
   $scope.moveUser = function() {
     navigator.geolocation.getCurrentPosition(function (pos) {
       $scope.userLoc = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-      $scope.userMarker.setPosition($scope.userLoc); 
+      $scope.userMarker.setPosition($scope.userLoc);
       console.log($scope.userMarker);
     });
   };
@@ -231,9 +231,9 @@ angular.module('starter.controllers', [])
             '<h5 class="title">' +
             title +
             '</h5>' +
-            '<img src="/img/' + 
-            rating + 
-            '.png" class="rating"' + 
+            '<img src="/img/' +
+            rating +
+            '.png" class="rating"' +
             '>' +
             '<small> via ' +
             votes +
@@ -329,7 +329,7 @@ angular.module('starter.controllers', [])
         }
 
         var stops = marker.stops;
-        if (stops) {        
+        if (stops) {
           for (var j = 0; j < stops.length; j++) {
             var stop = stops[j];
             if (stop) {
@@ -497,7 +497,7 @@ console.log('rootscope jaunts',$rootScope.jaunts);
     }).then(function(modal) {
       $scope.modal = modal;
 console.log('rootscope jaunts',$rootScope.jaunts);
-      
+
     });
     $scope.openModal = function() {
       $scope.modal.show();
@@ -522,7 +522,6 @@ console.log('rootscope jaunts',$rootScope.jaunts);
 })
 
 .controller('JauntDetailCtrl', function($scope, $stateParams, Jaunts, $rootScope) {
-
   $scope.jaunt = Jaunts.getJaunt($rootScope.jaunts, $stateParams.jauntId);
 })
 
@@ -544,7 +543,6 @@ console.log('rootscope jaunts',$rootScope.jaunts);
 
   //get initial position
   navigator.geolocation.getCurrentPosition(function (pos) {
-    console.log(pos);
     var query = {
       'start_location' : {
         'coordinates' : [
@@ -558,7 +556,7 @@ console.log('rootscope jaunts',$rootScope.jaunts);
     //set position coordinates in rootScope
     $rootScope.pos = pos;
 
-    angular.element( document.querySelector( 'div.home' ) ).addClass('fade');
+
 
     Jaunts.selectJaunts(query).then(function(data){
       $scope.jaunts = data.data;
@@ -566,11 +564,16 @@ console.log('rootscope jaunts',$rootScope.jaunts);
       //places on rootscope to persist across controllers
       $rootScope.jaunts = data.data;
 
-      angular.element( document.querySelector( '.background' ) ).addClass('fade');
-
-      setTimeout(function(){$state.go('tab.jaunts');}, 400);
     });
   }, function (error) {
     console.log('Unable to get location: ' + error.message);
   });
+
+  setTimeout(function(){
+    angular.element( document.querySelector( 'div.home' ) ).addClass('fade');
+    angular.element( document.querySelector( '.background' ) ).addClass('fade');
+    setTimeout(function() {
+      $state.go('tab.jaunts');
+    }, 400);
+  }, 3500);
 });
