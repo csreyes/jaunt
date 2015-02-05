@@ -56,12 +56,12 @@ angular.module('starter.controllers', [])
     $scope.centerOnMe()
     .then(function (pos) {
       // $scope.pos = pos;
-      $scope.placeUser();
       $scope.center = $scope.map.getCenter();
       $scope.show(0);
       // call moveUser every 10seconds
       // setInterval($scope.moveUser(), 10000);
-    })
+    });
+    $scope.placeUser();
   };
 
   $scope.findUser = function(callback) {
@@ -208,7 +208,7 @@ angular.module('starter.controllers', [])
     });
 
     // Remove the location listener calling moveUser()
-    navigator.geolocation.clearWatch($scope.watchId);
+    // navigator.geolocation.clearWatch($scope.watchId);
   };
 
   var findUser = function(callback) {
