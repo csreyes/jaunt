@@ -41,7 +41,7 @@ angular.module('starter.controllers', [])
 
   $scope.placeUser = function() {
     // get position if $rootScope.pos hasn't been set:
-    if (!$rootScopt.pos) {
+    if (!$rootScope.pos) {
       navigator.geolocation.getCurrentPosition(function (pos) {
         $rootScope.pos = pos;
         // format the position for the marker
