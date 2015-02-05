@@ -20,7 +20,6 @@ angular.module('starter.controllers', [])
 
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    $scope.userLoc = {};
     $scope.userMarker = {};
     $scope.watchId = null;
     $scope.polys = [];
@@ -34,48 +33,71 @@ angular.module('starter.controllers', [])
 
     $scope.centerOnMe()
     .then(function (pos) {
-      // $scope.pos = pos;
       $scope.center = $scope.map.getCenter();
       $scope.show(0);
-      // call moveUser every 10seconds
-      // setTimeout(function() {setInterval( $scope.moveUser(), 10000)} ,  );
-
     });
     $scope.placeUser();
   };
 
-  $scope.findUser = function(callback) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      $scope.userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-      callback(position);
-    });
+  $scope.placeUser = function() {
+    // get position if $rootScope.pos hasn't been set:
+    if (!$rootScopt.pos) {
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        $rootScope.pos = pos;
+        // format the position for the marker
+        $rootScope.latLng = new google.maps.LatLng($rootScope.pos.coords.latitude, pos.coords.longitude);
+        $scope.createUserMarker();
+      });
+    } else {
+      $rootScope.latLng = new google.maps.LatLng($rootScope.pos.coords.latitude, $rootScope.pos.coords.longitude); 
+    }
+    $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
   };
 
 
-
-  $scope.placeUser = function(callback) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      $scope.userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-      $scope.userMarker = new google.maps.Marker({
-        position: $scope.userLoc,
-        map: $scope.map,
-        title: 'You are here',
-        icon: '/img/jaunty_tiny.png',
-      });
-      // $scope.markers.push(userMarker);
-      setInterval( $scope.moveUser, 5000 );
-      // $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser);
+  $scope.createUserMarker = function() {
+    $scope.userMarker = new google.maps.Marker({
+      position: $rootScope.latLng,
+      map: $scope.map,
+      title: 'You are here',
+      icon: '/img/jaunty_tiny.png',
     });
   };
 
   $scope.moveUser = function() {
     navigator.geolocation.getCurrentPosition(function (pos) {
-      $scope.userLoc = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-      $scope.userMarker.setPosition($scope.userLoc);
-      console.log($scope.userMarker);
+      $rootScope.pos = pos;
+      $rootScope.latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      $scope.userMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude)); 
     });
+    // Check for a stop nearby when you're within a jaunt started
+    // $scope.checkForStop();
   };
 
+      // console.log('location updated: ' + $rootScope.pos);
+  $scope.checkForStop = function () {
+    // console.log($rootScope.pos);
+    var userX = $rootScope.pos.D;    // coords.longitude;
+    var userY = $rootScope.pos.k;    // coords.latitude;
+    // console.log('user location:', userX, userY);
+    // $scope.markers
+    for (var i = 0; i < $scope.markers.length; i++) {
+      var stopX = $scope.markers[i].position.D;
+      var stopY = $scope.markers[i].position.k;
+      // console.log('stopover location:', stopX, stopY);
+
+      var degreeDist = Math.sqrt( Math.pow( (userX - stopX), 2 ) + Math.pow( (userY - stopY), 2) ); 
+      // console.log('distance:', degreeDist);
+
+      var meterDist = Jaunts.degreesToMeters(degreeDist);
+      console.log('distance in meters:', meterDist);
+
+      if (meterDist < 40) {
+
+        
+      }
+    }
+  };
 
   $scope.clickCrosshairs = function (){
     $scope.center = $scope.map.getCenter();
@@ -177,7 +199,7 @@ angular.module('starter.controllers', [])
       setTimeout( $ionicLoading.hide, 500);
 
       $scope.jaunts = data.data;
-      //places on rootscope to persist across controllers
+      //places on rootScope to persist across controllers
       $rootScope.jaunts = data.data;
       $scope.polys = Jaunts.getAllPolys($scope.jaunts);
 
@@ -190,15 +212,6 @@ angular.module('starter.controllers', [])
     // Remove the location listener calling moveUser()
     // navigator.geolocation.clearWatch($scope.watchId);
   };
-
-  var findUser = function(callback) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-        callback(position);
-      });
-    };
-
-
 
   var hideMarkers = function(){
     for(var i = 0; i < $scope.infowindows.length; i++){
@@ -395,6 +408,7 @@ angular.module('starter.controllers', [])
       connectWindowAndMarker(marker, infowindow);
 
     }
+    console.log($scope.markers);
   };
 
   var addToMap = function(items){
