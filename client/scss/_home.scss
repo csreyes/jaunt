@@ -5,8 +5,49 @@ div.home {
   position: relative;
 }
 
+.background {
+  opacity: 1;
+  transition: all .4s ease-in-out;
+  -moz-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+}
+
+div.home {
+  opacity: 1;
+  transition: all .1s ease-in-out;
+  -moz-transition: all .1s ease-in-out;
+  -webkit-transition: all .1s ease-in-out;
+}
+
+.background.fade {
+  background-color: #ffffff;
+}
+
+.background.fade, div.home.fade {
+  opacity: 0;
+}
+
 img.logo {
-  width: 90%;
+  height: calc(100% - 245px);
+}
+
+div.home h1.title, div.home h2.slogan {
+  color: white;
+}
+
+div.home h1.title {
+  font-family: 'LondrinaSolid';
+  font-size: 800%;
+
+}
+
+div.home h2.slogan {
+  font-family: 'Bellota';
+  font-size: 220%;
+}
+
+div.home h2.slogan strong {
+  font-size:120%;
 }
 
 div.homeButtons {

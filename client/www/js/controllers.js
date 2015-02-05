@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('starter.controllers', [])
 
 .controller('MapCtrl', function($scope, $ionicLoading, $ionicActionSheet, $timeout, $ionicModal, Jaunts, $q, $rootScope) {
@@ -13,35 +15,35 @@ angular.module('starter.controllers', [])
       panControl: false,
       zoomControl: false,
       streetViewControl: false,
-      styles: [{"featureType":"poi",
-                "elementType": "labels",
-                "stylers":[{"visibility":"off"}]},
-                {"featureType":"landscape.natural",
-                 "elementType":"geometry.fill",
-                 "stylers":[{"visibility":"on"},
-                            {"color":"#e0efef"}]},
-                {"featureType":"poi",
-                 "elementType":"geometry.fill",
-                 "stylers":[{"visibility":"on"},
-                            {"color": "#C5E3BF"}]},
-                {"featureType":"road",
-                 "elementType":"geometry",
-                 "stylers":[{"lightness":100},
-                            {"visibility":"simplified"}]},
-                {"featureType":"road",
-                 "elementType":"geometry.fill",
-                 "stylers":[{"color": "#D1D1B8"}]},
-                {"featureType":"transit.line",
-                 "elementType":"geometry",
-                 "stylers":[{"visibility":"on"},
-                            {"lightness":700}]},
-                {"featureType":"water",
-                 "elementType":"all",
-                 "stylers":[{"color":"#C6E2FF"}]}]
+      styles: [{'featureType':'poi',
+                'elementType': 'labels',
+                'stylers':[{'visibility':'off'}]},
+              {'featureType':'landscape.natural',
+                 'elementType':'geometry.fill',
+                 'stylers':[{'visibility':'on'},
+               {'color':'#e0efef'}]},
+             {'featureType':'poi',
+                 'elementType':'geometry.fill',
+                 'stylers':[{'visibility':'on'},
+               {'color': '#C5E3BF'}]},
+             {'featureType':'road',
+                 'elementType':'geometry',
+                 'stylers':[{'lightness':100},
+               {'visibility':'simplified'}]},
+             {'featureType':'road',
+                 'elementType':'geometry.fill',
+                 'stylers':[{'color': '#D1D1B8'}]},
+               {'featureType':'transit.line',
+                 'elementType':'geometry',
+                 'stylers':[{'visibility':'on'},
+               {'lightness':700}]},
+             {'featureType':'water',
+                 'elementType':'all',
+                 'stylers':[{'color':'#C6E2FF'}]}]
     };
 
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions); 
-    
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
     $scope.userLoc = {};
     $scope.userMarker = {};
     $scope.watchId = null;
@@ -83,7 +85,7 @@ angular.module('starter.controllers', [])
         icon: '/img/jaunty_tiny.png',
       });
       // $scope.markers.push(userMarker);
-      $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
+      $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser);
     });
   };
 
@@ -92,7 +94,7 @@ angular.module('starter.controllers', [])
       console.log('moveUser');
       console.log(pos);
       console.log($scope.userMaker);
-      $scope.userMarker.setPosition(pos); 
+      $scope.userMarker.setPosition(pos);
     });
   };
 
@@ -100,7 +102,7 @@ angular.module('starter.controllers', [])
   $scope.clickCrosshairs = function (){
     $scope.center = $scope.map.getCenter();
     $scope.show(  $scope.index);
-  }
+  };
 
   $scope.centerOnMe = function () {
     return $q(function(resolve, reject) {
@@ -123,13 +125,13 @@ angular.module('starter.controllers', [])
       }, function (error) {
         reject('Unable to get location: ' + error.message);
       });
-    })
+    });
   };
-  
+
   /*// adjust from global scope? Popover for new users?
   $scope.search = 'jaunts near me!';
 
-  // adds Action Sheet for simple search  
+  // adds Action Sheet for simple search
   $scope.showSearch = function() {
 
     // Show action sheet
@@ -168,12 +170,12 @@ angular.module('starter.controllers', [])
       query.start_location = {
         coordinates: coordinates,
         range: 1000
-      }
+      };
     } else if(index === 1){
       query.end_location = {
         coordinates : coordinates,
         range: 1000
-      }
+      };
     } else if(index === 2){
       console.log('do some stuff for choice 3');
     }
@@ -204,7 +206,7 @@ angular.module('starter.controllers', [])
       addToMap($scope.polys);
 
       showMarkers();
-      
+
     });
 
     // Remove the location listener calling moveUser()
@@ -239,9 +241,9 @@ angular.module('starter.controllers', [])
             '<h5 class="title">' +
             $scope.jaunts[i].meta.title +
             '</h5>' +
-            '<img src="/img/' + 
-            Math.round($scope.jaunts[i].meta.rating) + 
-            '.png" class="rating"' + 
+            '<img src="/img/' +
+            Math.round($scope.jaunts[i].meta.rating) +
+            '.png" class="rating"' +
             '>' +
             '<small> via ' +
             $scope.jaunts[i].meta.votes +
@@ -284,7 +286,7 @@ angular.module('starter.controllers', [])
             $scope.infowindows[innerKey].open($scope.map);
           }
         })(i));
-        
+
         // on infowindow close, stop marker animation
         google.maps.event.addListener(infowindow, 'closeclick', (function(innerKey) {
           return function(event) {
@@ -300,7 +302,7 @@ angular.module('starter.controllers', [])
           }
         })(i));
     }
-  }
+  };
 
   var addToMap = function(items){
     for(var i = 0; i < items.length; i++){
@@ -347,7 +349,7 @@ angular.module('starter.controllers', [])
 
   $scope.buildQuery = function(){
     $scope.queryObj = {};
-    
+
     $scope.modal.hide();
     if($scope.query.tags){
       var mytags = $scope.query.tags.split(',');
@@ -355,7 +357,7 @@ angular.module('starter.controllers', [])
         mytags[i] = mytags[i].toLowerCase();
       }
       $scope.queryObj.tags =  mytags;
-      
+
     }
     if($scope.query.duration){
       var duration = {max: $scope.query.duration};
@@ -381,7 +383,7 @@ angular.module('starter.controllers', [])
     console.log($scope.queryObj);
     $scope.show($scope.index);
 
-  }  
+  };
 
   $scope.clearFilter = function(){
     $scope.queryObj = {};
@@ -389,7 +391,7 @@ angular.module('starter.controllers', [])
     $scope.query = {};
     $scope.show($scope.index);
 
-  }  
+  };
 
 })
 
@@ -438,33 +440,40 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HomeCtrl', function($rootScope, $scope, $state, Jaunts) {
+.controller('HomeCtrl', function($scope, $rootScope, $state, Jaunts) {
   $scope.settings = {
     enableFriends: true
   };
 
-  // $scope.jauntTo = function () {
-    // $state.go('tab.map');
-  // };
+  //get initial position
+  navigator.geolocation.getCurrentPosition(function (pos) {
+    console.log(pos);
+    var query = {
+      'start_location' : {
+        'coordinates' : [
+          pos.coords.longitude,
+          pos.coords.latitude
+        ],
+        'range': 1000
+      }
+    };
 
-  // $scope.jauntFrom = function () {
-    // $state.go('tab.map');
-  // }
-  $scope.explore = function () {
-    $state.go('tab.jaunts');
+    //set position coordinates in rootScope
+    $rootScope.pos = pos;
 
+    angular.element( document.querySelector( 'div.home' ) ).addClass('fade');
 
-    var query = {};
     Jaunts.selectJaunts(query).then(function(data){
-      $rootScope.jaunts = data.data;
-    });
-      // setTimeout( $ionicLoading.hide, 500);
-      // $scope.jaunts = data.data;
+      $scope.jaunts = data.data;
+
       //places on rootscope to persist across controllers
-      // $scope.polys = Jaunts.getAllPolys($scope.jaunts);
-      // addToMap($scope.polys);
-      // showMarkers();
+      $rootScope.jaunts = data.data;
 
-  }
+      angular.element( document.querySelector( '.background' ) ).addClass('fade');
 
+      setTimeout(function(){$state.go('tab.jaunts');}, 400);
+    });
+  }, function (error) {
+    console.log('Unable to get location: ' + error.message);
+  });
 });
