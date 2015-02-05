@@ -269,13 +269,13 @@ angular.module('starter.controllers', [])
 
 
   var createStartMarker = function(jaunt) {
-    var greenBoneIcon = '/img/green-dog-bone-hi-35.png';
+    var startIcon = '/img/star.png'
     var lat = jaunt.start_location.coordinates[1];
     var lng = jaunt.start_location.coordinates[0];
     var title = jaunt.meta.title;
     var stops = jaunt.stops;
     var jaunt = jaunt;
-    return markerMaker(lat, lng, title, null, stops, jaunt);
+    return markerMaker(lat, lng, title, startIcon, stops, jaunt);
   };
 
   var stopMarkerMaker = function(lat, lng, title, icon, id, jauntID){
@@ -362,12 +362,12 @@ angular.module('starter.controllers', [])
 
       google.maps.event.addListener(infowindow, 'closeclick', function(event) {
           marker.setAnimation(null);
-          removeFromMap($scope.polys);
-          removeFromMap($scope.markers);
-          removeFromMap($scope.stopovers);
+          // removeFromMap($scope.polys);
+          // removeFromMap($scope.markers);
+          // removeFromMap($scope.stopovers);
           removeFromMap($scope.infowindows);
-          addToMap($scope.polys);
-          addToMap($scope.markers);
+          // addToMap($scope.polys);
+          // addToMap($scope.markers);
       });
 
       google.maps.event.addListener($scope.map, 'click', function(event) {
@@ -523,6 +523,39 @@ console.log('rootscope jaunts',$rootScope.jaunts);
 
 .controller('JauntDetailCtrl', function($scope, $stateParams, Jaunts, $rootScope) {
   $scope.jaunt = Jaunts.getJaunt($rootScope.jaunts, $stateParams.jauntId);
+})
+
+.controller('NavigateCtrl', function($scope, $ionicLoading, $ionicActionSheet, $timeout, $ionicModal, Jaunts, $q, $rootScope) {
+  $scope.initialize = function () {
+
+    if (!$rootScope.pos) {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        $rootScope.pos = pos;
+        $rootScope.latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      });
+    }
+
+    console.log($rootScope.pos)
+
+    var mapOptions = {
+      center: new google.maps.LatLng(37.7833, -122.4167),
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      draggableCursor:'crosshair',
+      mapTypeControl: false,
+      panControl: false,
+      zoomControl: false,
+      streetViewControl: false,
+      styles: [{"featureType":"landscape.man_made","elementType":"geometry","stylers":[{"color":"#f7f1df"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"color":"#d0e3b4"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"color":"#fbd3da"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#bde6ab"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffe15f"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efd151"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"color":"black"}]},{"featureType":"transit.station.airport","elementType":"geometry.fill","stylers":[{"color":"#cfb2db"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#a2daf2"}]}]
+    };
+
+    console.log('I AM BEING RUN');
+
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  };
+  if (!$scope.map) {
+    $scope.initialize();
+  }
 })
 
 .controller('PlaceDetailCtrl', function($scope, $stateParams, Jaunts, $rootScope) {
