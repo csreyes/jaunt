@@ -60,8 +60,9 @@ angular.module('starter.services')
       return null;
     },
     getAllPolys : function(jaunts){
-      var colors = ['red', 'blue', 'green', 'orange', 'purple']; 
+      var colors = ['red', 'blue', 'green', '#131540', 'purple']; 
       var polys = [];
+
 
       for(var i = 0; i< jaunts.length; i++){
         var linePoints = [];
@@ -72,8 +73,13 @@ angular.module('starter.services')
           linePoints.push(endPoint);
 
         }
-        var poly = new google.maps.Polyline({strokeColor: colors[i%(colors.length)]});
+        var poly = new google.maps.Polyline({
+          strokeColor: colors[i%(colors.length)],
+          strokeOpacity: 0.6,
+          strokeWeight: 6
+        });
         poly.setPath(linePoints);
+        poly.jauntID = jaunts[i]._id;
         polys.push(poly);
       }
       return polys;  

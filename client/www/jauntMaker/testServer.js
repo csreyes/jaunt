@@ -6,10 +6,10 @@ var app = express();
 
 app.use(bodyParser());
 var yelp = require("yelp").createClient({
-	consumer_key: 'REPLACE WITH PROPER KEY', 
-	consumer_secret: 'REPLACE WITH PROPER KEY',
-	token: 'REPLACE WITH PROPER KEY',
-	token_secret: 'REPLACE WITH PROPER KEY'
+	consumer_key: 'KEY', 
+	consumer_secret: 'SECRET',
+	token: 'TOKEN',
+	token_secret: 'SECRET'
 });
 
 app.get('/', function (req, res) {
