@@ -59,7 +59,7 @@ angular.module('starter.controllers', [])
       $scope.center = $scope.map.getCenter();
       $scope.show(0);
       // call moveUser every 10seconds
-      setInterval($scope.moveUser(), 10000);
+      // setInterval($scope.moveUser(), 10000);
     });
     $scope.placeUser();
   };
