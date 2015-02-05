@@ -22,6 +22,8 @@ module.exports = {
 		var createJaunt = Q.nbind(Jaunt.create, Jaunt);
 
 		var newJaunt = req.body;
+		console.log('req.body inside jauntController.newJaunt',req.body);
+		console.log('req.body.stops inside jauntController.newJaunt', req.body.stops);
 
 		createJaunt(newJaunt)
 		  .then(function (createdJaunt) {

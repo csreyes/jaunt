@@ -489,16 +489,20 @@ angular.module('starter.controllers', [])
 })
 
 .controller('JauntsCtrl', function($scope, Jaunts, $ionicModal, $rootScope) {
-
+console.log('rootscope jaunts',$rootScope.jaunts);
 
   $ionicModal.fromTemplateUrl('templates/filter.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
       $scope.modal = modal;
+console.log('rootscope jaunts',$rootScope.jaunts);
+      
     });
     $scope.openModal = function() {
       $scope.modal.show();
+console.log('rootscope jaunts',$rootScope.jaunts);
+
     };
     $scope.closeModal = function() {
       $scope.modal.hide();

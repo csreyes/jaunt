@@ -34,8 +34,6 @@ $(function(){
     var tags = prompt("Please add tags (separated by commas)");
     var author = prompt('What\'s your name?');
 
-    console.log(jaunt);
-
     jaunt.meta = {
       title : title,
       description : description,
@@ -49,7 +47,6 @@ $(function(){
 
 
     var data = formatJaunt(jaunt);
-    
     $.ajax({
       url: "/api/jaunts",
         type: "POST",
@@ -133,6 +130,7 @@ function Init() {
           }
           var description = $('#myDescription')[0].value;
           var photoUrl = $('#myURL')[0].value;
+          var audioUrl = $('#audioURL')[0].value;
           var tags = $('#myTag')[0].value;
           var duration = $('#myDuration')[0].value;
           
@@ -268,7 +266,7 @@ var obtainStopInfo = function(obj){
 
   $("#modalForm").append("<p>Description: <textarea id='myDescription' name='description' cols=48 rows=4></textarea></p>");
   $("#modalForm").append("<p>Photo URL: <input id='myURL' type='url' size='100'></input></p>");
-  $("#modalForm").append("<p>Audio URL: <input id='myURL' type='url' size='100'></input></p>");
+  $("#modalForm").append("<p>Audio URL: <input id='audioURL' type='url' size='100'></input></p>");
   $("#modalForm").append("<p>Tags: <input id='myTag' type='text' size='40'></input></p>");
   $("#modalForm").append("<p>Duration (s): <input id='myDuration' type='text' size='10'></input></p>");
   $("#modalForm").append("<br>");
