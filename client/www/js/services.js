@@ -59,6 +59,10 @@ angular.module('starter.services')
       }
       return null;
     },
+    degreesToMeters : function(deg) {
+      var meters = deg * 1.1132 / 0.00001;
+      return meters;
+    },
     getAllPolys : function(jaunts){
       var colors = ['red', 'blue', 'green', '#131540', 'purple']; 
       var polys = [];
