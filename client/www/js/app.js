@@ -51,6 +51,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('tab.navigate', {
+    url: '/navigate',
+    views: {
+      'tab-navigate': {
+        templateUrl: 'templates/tab-navigate.html',
+        controller: 'NavigateCtrl'
+      }
+    }
+  })
+
   .state('tab.jaunts', {
       url: '/jaunts',
       views: {
