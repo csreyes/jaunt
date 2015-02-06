@@ -5,10 +5,10 @@
   The Jaunts service returns an array of jaunt data
 -->
 
-<ion-view view-title="{{jaunt.meta.title}}">
+<ion-view view-title="Jaunt Details">
   <!-- map view -->
   <ion-nav-buttons side="secondary">
-    <a href="#/tab/map"><button class="button button-icon icon ion-ios7-location"> Map</button></a>
+    <a href="#/tab/map"><button class="button button-icon icon ion-ios7-navigate ion-ios-navigate"> Map</button></a>
   </ion-nav-buttons>
 
   <ion-content>
@@ -34,7 +34,7 @@
       <div class="item item-body">
         <img class="full-image" ng-src="{{jaunt.stops[0].photoUrl || '/img/jaunt-logo.png'}}">
         <p>
-          Fancy: 
+          Fancy:
           <span ng-repeat="tag in jaunt.meta.tags">
             {{tag}},
           </span>
@@ -54,7 +54,7 @@
       </div>
 
     </div>
-    
+
   </ion-content>
 
 </ion-view>

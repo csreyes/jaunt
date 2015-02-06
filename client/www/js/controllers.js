@@ -57,10 +57,10 @@ angular.module('starter.controllers', [])
       });
     } else {
       console.log('found rootScope.pos in placeUser:', $rootScope.pos);
-      $rootScope.latLng = new google.maps.LatLng($rootScope.pos.coords.latitude, $rootScope.pos.coords.longitude); 
+      $rootScope.latLng = new google.maps.LatLng($rootScope.pos.coords.latitude, $rootScope.pos.coords.longitude);
       $scope.createUserMarker();
     }
-    $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
+    $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser);
   };
 
 
@@ -78,7 +78,7 @@ angular.module('starter.controllers', [])
     navigator.geolocation.getCurrentPosition(function (pos) {
       $rootScope.pos = pos;
       $rootScope.latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-      $scope.userMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude)); 
+      $scope.userMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
     });
     // Check for a stop nearby when you're within a jaunt started
     // $scope.checkForStop();
@@ -96,7 +96,7 @@ angular.module('starter.controllers', [])
       var stopY = $scope.markers[i].position.k;
       // console.log('stopover location:', stopX, stopY);
 
-      var degreeDist = Math.sqrt( Math.pow( (userX - stopX), 2 ) + Math.pow( (userY - stopY), 2) ); 
+      var degreeDist = Math.sqrt( Math.pow( (userX - stopX), 2 ) + Math.pow( (userY - stopY), 2) );
       // console.log('distance:', degreeDist);
 
       var meterDist = Jaunts.degreesToMeters(degreeDist);
@@ -104,7 +104,7 @@ angular.module('starter.controllers', [])
 
       if (meterDist < 40) {
 
-        
+
       }
     }
   };
@@ -595,9 +595,6 @@ angular.module('starter.controllers', [])
     // get location if none
     if (!$rootScope.latLng) {
 
-
-        // $scope.centerOnMe();     // This shouldn't be needed 
-
         $scope.createMap($rootScope.latLng, 17);
 
         $scope.userMarker = {};
@@ -715,11 +712,10 @@ angular.module('starter.controllers', [])
         $scope.createUserMarker();
       });
     } else {
-      console.log('found rootScope.pos in placeUser:', $rootScope.pos);
-      $rootScope.latLng = new google.maps.LatLng($rootScope.pos.coords.latitude, $rootScope.pos.coords.longitude); 
+      $rootScope.latLng = new google.maps.LatLng($rootScope.pos.coords.latitude, $rootScope.pos.coords.longitude);
       $scope.createUserMarker();
     }
-    $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
+    $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser);
   };
 
 
@@ -737,7 +733,7 @@ angular.module('starter.controllers', [])
     navigator.geolocation.getCurrentPosition(function (pos) {
       $rootScope.pos = pos;
       $rootScope.latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-      $scope.userMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude)); 
+      $scope.userMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
     });
     // Check for a stop nearby when you're within a jaunt started
     // $scope.checkForStop();
@@ -755,7 +751,7 @@ angular.module('starter.controllers', [])
       var stopY = $scope.markers[i].position.k;
       // console.log('stopover location:', stopX, stopY);
 
-      var degreeDist = Math.sqrt( Math.pow( (userX - stopX), 2 ) + Math.pow( (userY - stopY), 2) ); 
+      var degreeDist = Math.sqrt( Math.pow( (userX - stopX), 2 ) + Math.pow( (userY - stopY), 2) );
       // console.log('distance:', degreeDist);
 
       var meterDist = Jaunts.degreesToMeters(degreeDist);
@@ -763,7 +759,6 @@ angular.module('starter.controllers', [])
 
       if (meterDist < 40) {
 
-        
       }
     }
   };
@@ -831,7 +826,7 @@ angular.module('starter.controllers', [])
 
       //places on rootscope to persist across controllers
       $rootScope.jaunts = data.data;
-
+      console.log($rootScope.jaunts[0]);
     });
   }, function (error) {
     console.log('Unable to get location: ' + error.message);
@@ -843,5 +838,5 @@ angular.module('starter.controllers', [])
     setTimeout(function() {
       $state.go('tab.jaunts');
     }, 400);
-  }, 3500);
+  }, 2500);
 });
