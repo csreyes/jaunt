@@ -568,6 +568,22 @@ angular.module('starter.controllers', [])
 
 
 
+
+
+
+
+
+
+
+
+
+
+//////////  NAVIGATION PAGE CONTROLLER
+
+
+
+
+
 .controller('NavigateCtrl', function($scope, $ionicLoading, $ionicActionSheet, $timeout, $ionicModal, Jaunts, $q, $rootScope) {
 
 
