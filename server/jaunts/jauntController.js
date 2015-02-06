@@ -1,5 +1,6 @@
 var Jaunt = require('./jauntModel.js');
 var query = require('../utils/queryUtils.js');
+// var yelpApi = require('../yelp/yelpController.js');
 var Q = require('q');
 
 module.exports = {
@@ -22,8 +23,8 @@ module.exports = {
 		var createJaunt = Q.nbind(Jaunt.create, Jaunt);
 
 		var newJaunt = req.body;
-		console.log('req.body inside jauntController.newJaunt',req.body);
-		console.log('req.body.stops inside jauntController.newJaunt', req.body.stops);
+		// console.log('req.body inside jauntController.newJaunt',req.body);
+		// console.log('req.body.stops inside jauntController.newJaunt', req.body.stops);
 
 		createJaunt(newJaunt)
 		  .then(function (createdJaunt) {
