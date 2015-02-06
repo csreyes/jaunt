@@ -107,14 +107,37 @@ angular.module('starter.controllers', [])
     }
   };
 
+  $scope.triggerStatus = function(){
+    if ($scope.jauntStatus === "Start Jaunt") {
+      $scope.jauntStatus = "End Jaunt";
+    } else if ($scope.jauntStatus === "End Jaunt") {
+      $scope.jauntStatus = "Start Jaunt";
+    }
+    console.log($scope.jauntStatus);
+  }
+
+  $scope.jauntAction = function() {
+    if($scope.selectedJaunt && $scope.jauntStatus === "Start Jaunt") {
+      $scope.startJaunt();
+    } else if ($scope.selectedJaunt && $scope.jauntStatus === "End Jaunt") {
+      $scope.endJaunt();
+    }
+  };
+
+  $scope.endJaunt = function() {
+    $scope.jauntStarted = false;
+    $scope.map.setZoom(14)
+    $scope.triggerStatus();
+    console.log("jaunt ended")
+  }
+
   $scope.startJaunt = function() {
-
     $scope.jauntStarted = true;
-
     $scope.map.setZoom(16);
+    $scope.triggerStatus();
 
-    console.log('started Jaunt');
-    console.log($scope.selectedJaunt);
+    console.log('jaunt ended');
+    // console.log($scope.selectedJaunt);
     // console.log(Jaunts);          // refers to service with a bunch of methods
     // console.log($scope.jaunts);   // array of jaunts - clear this.
     // console.log($scope.markers);
@@ -362,6 +385,7 @@ angular.module('starter.controllers', [])
           }
         });
 
+        $scope.jauntStatus = "Start Jaunt";
         $scope.$apply(function(){
           $scope.selectedJaunt = marker.jaunt;
         })
@@ -603,22 +627,75 @@ angular.module('starter.controllers', [])
 
 
 
-
-
-//////////  NAVIGATION PAGE CONTROLLER
-
-
-
-
-
 .controller('NavigateCtrl', function($scope, $ionicLoading, $ionicActionSheet, $timeout, $ionicModal, Jaunts, $q, $rootScope) {
 
-  $scope.initialize = function () {
+  // $scope.initialize = function () {
 
-    // $scope.createMap($rootScope.latLng, 17);
-    console.log($scope.map);
-    $scope.map = null;
+  //   // $scope.createMap($rootScope.latLng, 17);
+  //   console.log($scope.map);
+  //   $scope.map = null;
 
+  //       // $scope.centerOnMe();     // This shouldn't be needed 
+
+  //       $scope.createMap($rootScope.latLng, 17);
+
+  //       $scope.selectedJaunt = $rootScope.selectedJaunt;
+  //       $scope.userMarker = {};
+  //       $scope.watchId = null;
+  //       $scope.polys = [];
+  //       $scope.markers = [];
+  //       $scope.stopovers = [];
+  //       $scope.infowindows = [];
+  //       $scope.index = 0;
+  //       $scope.query = {};  //user queries
+  //       $scope.queryObj = {}; //sent to the db
+
+  //       $scope.placeUser();
+
+  //       // $scope.centerOnMe()
+  //       // .then(function (pos) {
+  //       //   $scope.center = $scope.map.getCenter();
+  //       //   $scope.show(0);
+  //       // });
+  //       // $scope.placeUser();
+  //       console.log($scope.selectedJaunt)
+
+
+  //     // });
+  //   } else {
+
+  //     $scope.selectedJaunt = $rootScope.selectedJaunt;
+  //     console.log('latLng found in Navigate');
+  //     $scope.createMap($rootScope.latLng, 17);
+  //     $scope.userMarker = {};
+  //     $scope.watchId = null;
+  //     $scope.polys = [];
+  //     $scope.markers = [];
+  //     $scope.stopovers = [];
+  //     $scope.infowindows = [];
+  //     $scope.index = 0;
+  //     $scope.query = {};  //user queries
+  //     $scope.queryObj = {}; //sent to the db
+
+
+  //     $scope.placeUser();
+
+  //     // $scope.centerOnMe()
+  //     // .then(function (pos) {
+  //     //   $scope.center = $scope.map.getCenter();
+  //     //   $scope.show(0);
+  //     // });
+  //     // $scope.placeUser();
+
+
+  //   }
+
+  //   console.log($rootScope.jaunts);
+  // };
+
+  $scope.createMap = function(position, zoom) {
+
+    console.log('create map called');
     var mapOptions = {
       center: new google.maps.LatLng(37.7833, -122.4167),
       zoom: 17,
@@ -793,6 +870,7 @@ angular.module('starter.controllers', [])
       showMarkers();
 
     });
+
   };
 
 

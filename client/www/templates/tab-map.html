@@ -13,10 +13,10 @@
   </ion-nav-buttons>
 
   <ion-nav-buttons side="secondary">
-    <a ng-click="startJaunt()" ng-show="selectedJaunt && !jauntStarted"><button class="button button-icon icon ion-ios7-location">Start Jaunt</button></a>
+    <a ng-click="jauntAction()" ng-show="selectedJaunt"><button class="button button-icon icon ion-ios7-location">{{jauntStatus}}</button></a>
   </ion-nav-buttons>
-
-<!--     <ion-nav-buttons side="secondary">
+<!-- 
+    <ion-nav-buttons side="secondary">
     <a ng-click="endJaunt()" ng-show="selectedJaunt && jauntStarted"><button class="button button-icon icon ion-ios7-location">End Jaunt</button></a>
   </ion-nav-buttons> -->
 
