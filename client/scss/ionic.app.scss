@@ -16,6 +16,7 @@ $dark:                            #444 !default;
 */
 
 $bgcolor: #f7882e;
+$light: #f7882e;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -23,13 +24,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "client/www/lib/ionic/scss/ionic";
 
-
 // Include custom scss
 @import "home";
 @import "map";
 
-.background, .background .pane, .background .item, .background .item-complex .item-content{
+.background{
     background-color: $bgcolor;
 }
 
-
+.item {
+  background-color: white;
+}
