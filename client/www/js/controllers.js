@@ -2,6 +2,9 @@
 
 angular.module('starter.controllers', [])
 
+
+
+
 .controller('MapCtrl', function($scope, $ionicLoading, $ionicActionSheet, $timeout, $ionicModal, Jaunts, $q, $rootScope) {
 
   $scope.initialize = function () {
@@ -10,7 +13,7 @@ angular.module('starter.controllers', [])
       center: new google.maps.LatLng(37.7833, -122.4167),
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      draggableCursor:'crosshair',
+      draggableCursor:'grab',
       mapTypeControl: false,
       panControl: false,
       zoomControl: false,
@@ -327,6 +330,11 @@ angular.module('starter.controllers', [])
           }
         });
 
+        $scope.$apply(function(){
+          $scope.selectedJaunt = marker.jaunt;
+        })
+        $rootScope.selectedJaunt = marker.jaunt;
+
         removeFromMap($scope.stopovers);
         $scope.infowindows.forEach(function(InfoWindow) {
           InfoWindow.close();
@@ -340,7 +348,6 @@ angular.module('starter.controllers', [])
             }
           });
         }
-
         var stops = marker.stops;
         if (stops) {
           for (var j = 0; j < stops.length; j++) {
@@ -386,6 +393,10 @@ angular.module('starter.controllers', [])
       google.maps.event.addListener($scope.map, 'click', function(event) {
           marker.setAnimation(null);
           infowindow.close();
+          $scope.$apply(function(){
+            $scope.selectedJaunt = null;
+          })
+          $rootScope.selectedJaunt = null;
           removeFromMap($scope.polys);
           removeFromMap($scope.markers);
           removeFromMap($scope.stopovers);
@@ -450,9 +461,9 @@ angular.module('starter.controllers', [])
     });
 
 
-    if (!$scope.map) {
-      $scope.initialize();
-    }
+  if (!$scope.map) {
+    $scope.initialize();
+  }
 
   $scope.buildQuery = function(){
     $scope.queryObj = {};
@@ -502,6 +513,9 @@ angular.module('starter.controllers', [])
 
 })
 
+
+
+
 .controller('JauntsCtrl', function($scope, Jaunts, $ionicModal, $rootScope) {
 console.log('rootscope jaunts',$rootScope.jaunts);
 
@@ -535,27 +549,86 @@ console.log('rootscope jaunts',$rootScope.jaunts);
     });
 })
 
+
+
+
+
 .controller('JauntDetailCtrl', function($scope, $stateParams, Jaunts, $rootScope) {
   $scope.jaunt = Jaunts.getJaunt($rootScope.jaunts, $stateParams.jauntId);
 })
 
+
+
+
+
 .controller('NavigateCtrl', function($scope, $ionicLoading, $ionicActionSheet, $timeout, $ionicModal, Jaunts, $q, $rootScope) {
+
+
   $scope.initialize = function () {
 
-    if (!$rootScope.pos) {
+    // get location if none
+    if (!$rootScope.latLng) {
+      console.log('no position yet, loading...');
       navigator.geolocation.getCurrentPosition(function(pos) {
         $rootScope.pos = pos;
         $rootScope.latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+
+        $scope.createMap($rootScope.latLng, 17);
+
+        $scope.userMarker = {};
+        $scope.watchId = null;
+        $scope.polys = [];
+        $scope.markers = [];
+        $scope.stopovers = [];
+        $scope.infowindows = [];
+        $scope.index = 0;
+        $scope.query = {};  //user queries
+        $scope.queryObj = {}; //sent to the db
+
+
+        // $scope.centerOnMe()
+        // .then(function (pos) {
+        //   $scope.center = $scope.map.getCenter();
+        //   $scope.show(0);
+        // });
+        // $scope.placeUser();
+
       });
+    } else {
+
+      $scope.createMap($rootScope.latLng, 17);
+
+
+      $scope.userMarker = {};
+      $scope.watchId = null;
+      $scope.polys = [];
+      $scope.markers = [];
+      $scope.stopovers = [];
+      $scope.infowindows = [];
+      $scope.index = 0;
+      $scope.query = {};  //user queries
+      $scope.queryObj = {}; //sent to the db
+
+
+      // $scope.centerOnMe()
+      // .then(function (pos) {
+      //   $scope.center = $scope.map.getCenter();
+      //   $scope.show(0);
+      // });
+      // $scope.placeUser();
+
+
     }
 
-    console.log($rootScope.pos)
+  };
 
+
+  $scope.createMap = function(position, zoom) {
     var mapOptions = {
-      center: new google.maps.LatLng(37.7833, -122.4167),
-      zoom: 15,
+      center: position,
+      zoom: zoom,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      draggableCursor:'crosshair',
+      draggableCursor:'grab',
       mapTypeControl: false,
       panControl: false,
       zoomControl: false,
@@ -563,25 +636,42 @@ console.log('rootscope jaunts',$rootScope.jaunts);
       styles: [{"featureType":"landscape.man_made","elementType":"geometry","stylers":[{"color":"#f7f1df"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"color":"#d0e3b4"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"color":"#fbd3da"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#bde6ab"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffe15f"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efd151"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"color":"black"}]},{"featureType":"transit.station.airport","elementType":"geometry.fill","stylers":[{"color":"#cfb2db"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#a2daf2"}]}]
     };
 
-    console.log('I AM BEING RUN');
-
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
   };
+
+
   if (!$scope.map) {
     $scope.initialize();
   }
 })
+
+
+
+
+
+
+
+
+
 
 .controller('PlaceDetailCtrl', function($scope, $stateParams, Jaunts, $rootScope) {
 
   $scope.stop = Jaunts.getStop($rootScope.jaunts, $stateParams.jauntId, $stateParams.placeId);
 })
 
+
+
+
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };
 })
+
+
+
+
 
 .controller('HomeCtrl', function($scope, $rootScope, $state, Jaunts) {
   $scope.settings = {
