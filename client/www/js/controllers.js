@@ -112,14 +112,37 @@ angular.module('starter.controllers', [])
     }
   };
 
+  $scope.triggerStatus = function(){
+    if ($scope.jauntStatus === "Start Jaunt") {
+      $scope.jauntStatus = "End Jaunt";
+    } else if ($scope.jauntStatus === "End Jaunt") {
+      $scope.jauntStatus = "Start Jaunt";
+    }
+    console.log($scope.jauntStatus);
+  }
+
+  $scope.jauntAction = function() {
+    if($scope.selectedJaunt && $scope.jauntStatus === "Start Jaunt") {
+      $scope.startJaunt();
+    } else if ($scope.selectedJaunt && $scope.jauntStatus === "End Jaunt") {
+      $scope.endJaunt();
+    }
+  };
+
+  $scope.endJaunt = function() {
+    $scope.jauntStarted = false;
+    $scope.map.setZoom(14)
+    $scope.triggerStatus();
+    console.log("jaunt ended")
+  }
+
   $scope.startJaunt = function() {
-
     $scope.jauntStarted = true;
-
     $scope.map.setZoom(16);
+    $scope.triggerStatus();
 
-    console.log('started Jaunt');
-    console.log($scope.selectedJaunt);
+    console.log('jaunt ended');
+    // console.log($scope.selectedJaunt);
     // console.log(Jaunts);          // refers to service with a bunch of methods
     // console.log($scope.jaunts);   // array of jaunts - clear this.
     // console.log($scope.markers);
@@ -370,6 +393,7 @@ angular.module('starter.controllers', [])
           }
         });
 
+        $scope.jauntStatus = "Start Jaunt";
         $scope.$apply(function(){
           $scope.selectedJaunt = marker.jaunt;
         })
@@ -601,6 +625,11 @@ angular.module('starter.controllers', [])
 
 
 
+<<<<<<< HEAD
+.controller('NavigateCtrl', function($scope, $ionicLoading, $ionicActionSheet, $timeout, $ionicModal, Jaunts, $q, $rootScope) {
+
+})
+=======
 
 
 
@@ -797,14 +826,7 @@ angular.module('starter.controllers', [])
 //     $scope.initialize();
 //   }
 // })
-
-
-
-
-
-
-
-
+>>>>>>> ef2a023... Adds invocation and resulting action for checkForStop function
 
 
 .controller('PlaceDetailCtrl', function($scope, $stateParams, Jaunts, $rootScope) {
