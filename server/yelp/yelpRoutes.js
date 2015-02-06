@@ -10,4 +10,6 @@ module.exports = function (app) {
 
   app.route('/')
     .post(yelpController.fetchYelp);
+  // app.post('/fetchYelp', yelpController.fetchYelp);
+  // app.post('/getBusinessInfo',yelpController.getBusinessInfo);
 };

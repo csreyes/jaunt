@@ -79,6 +79,10 @@ var JauntSchema = new mongoose.Schema({
   stops: [
     {
       name : String,
+      yelpId: String,
+      displayAddress: String,
+      ratingUrl: String,
+      yelpImage: String,
       description : String,
       photoUrl: String,
       audioUrl: String,
