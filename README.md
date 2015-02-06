@@ -11,6 +11,7 @@ Jaunt lets local explorers find walking adventures that fit their fancy.
   - __Original Scrum Master__: [Andy Coenen](https://github.com/cannoneyed)
   - __Original Development Team Members__: [Zachary Lopez](https://github.com/zdlopez), [Benoy Maniara](https://github.com/maniarab)
 
+
   - __Legacy Product Owner__: [Christian Reyes](https://github.com/csreyes) 
   - __Legacy Scrum Master__: [Preston Parry](https://github.com/climbsrocks)
   - __Legacy Development Team Members__: [Matt Conrad](https://github.com/mmconrad), [Alan Sun](https://github.com/zheshishei)
