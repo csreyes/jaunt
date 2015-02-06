@@ -9,6 +9,7 @@ angular.module('starter.controllers', [])
 
   $scope.initialize = function () {
 
+    console.log('latLng:', $rootScope.latLng);
     var mapOptions = {
       center: new google.maps.LatLng(37.7833, -122.4167),
       zoom: 14,
@@ -36,15 +37,18 @@ angular.module('starter.controllers', [])
 
     $scope.centerOnMe()
     .then(function (pos) {
+      console.log('centerOnMe returned and continued')
       $scope.center = $scope.map.getCenter();
       $scope.show(0);
+      $scope.placeUser();
     });
-    $scope.placeUser();
   };
 
   $scope.placeUser = function() {
+    console.log('placeUser called')
     // get position if $rootScope.pos hasn't been set:
     if (!$rootScope.pos) {
+      console.log('no $rootScope.pos found');
       navigator.geolocation.getCurrentPosition(function (pos) {
         $rootScope.pos = pos;
         // format the position for the marker
@@ -52,13 +56,16 @@ angular.module('starter.controllers', [])
         $scope.createUserMarker();
       });
     } else {
+      console.log('found rootScope.pos in placeUser:', $rootScope.pos);
       $rootScope.latLng = new google.maps.LatLng($rootScope.pos.coords.latitude, $rootScope.pos.coords.longitude); 
+      $scope.createUserMarker();
     }
     $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
   };
 
 
   $scope.createUserMarker = function() {
+    console.log('Jaunty created');
     $scope.userMarker = new google.maps.Marker({
       position: $rootScope.latLng,
       map: $scope.map,
@@ -121,7 +128,7 @@ angular.module('starter.controllers', [])
       });
 
       navigator.geolocation.getCurrentPosition(function (pos) {
-        console.log('Got pos', pos);
+        console.log('centerOnMe got pos', pos);
         $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
         $ionicLoading.hide();
         resolve(pos);
@@ -517,19 +524,19 @@ angular.module('starter.controllers', [])
 
 
 .controller('JauntsCtrl', function($scope, Jaunts, $ionicModal, $rootScope) {
-console.log('rootscope jaunts',$rootScope.jaunts);
+// console.log('rootscope jaunts',$rootScope.jaunts);
 
   $ionicModal.fromTemplateUrl('templates/filter.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
       $scope.modal = modal;
-console.log('rootscope jaunts',$rootScope.jaunts);
+// console.log('rootscope jaunts',$rootScope.jaunts);
 
     });
     $scope.openModal = function() {
       $scope.modal.show();
-console.log('rootscope jaunts',$rootScope.jaunts);
+// console.log('rootscope jaunts',$rootScope.jaunts);
 
     };
     $scope.closeModal = function() {
@@ -561,17 +568,35 @@ console.log('rootscope jaunts',$rootScope.jaunts);
 
 
 
+
+
+
+
+
+
+
+
+
+
+//////////  NAVIGATION PAGE CONTROLLER
+
+
+
+
+
 .controller('NavigateCtrl', function($scope, $ionicLoading, $ionicActionSheet, $timeout, $ionicModal, Jaunts, $q, $rootScope) {
 
 
   $scope.initialize = function () {
+    console.log('INITIALIZE INVOKED');
+
+    console.log('latLng:', $rootScope.latLng);
 
     // get location if none
     if (!$rootScope.latLng) {
-      console.log('no position yet, loading...');
-      navigator.geolocation.getCurrentPosition(function(pos) {
-        $rootScope.pos = pos;
-        $rootScope.latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+
+
+        // $scope.centerOnMe();     // This shouldn't be needed 
 
         $scope.createMap($rootScope.latLng, 17);
 
@@ -585,19 +610,19 @@ console.log('rootscope jaunts',$rootScope.jaunts);
         $scope.query = {};  //user queries
         $scope.queryObj = {}; //sent to the db
 
+        $scope.placeUser();
 
         // $scope.centerOnMe()
         // .then(function (pos) {
         //   $scope.center = $scope.map.getCenter();
         //   $scope.show(0);
         // });
-        // $scope.placeUser();
 
-      });
+      // });
     } else {
 
+      console.log('latLng found in Navigate');
       $scope.createMap($rootScope.latLng, 17);
-
 
       $scope.userMarker = {};
       $scope.watchId = null;
@@ -610,6 +635,8 @@ console.log('rootscope jaunts',$rootScope.jaunts);
       $scope.queryObj = {}; //sent to the db
 
 
+      $scope.placeUser();
+
       // $scope.centerOnMe()
       // .then(function (pos) {
       //   $scope.center = $scope.map.getCenter();
@@ -620,10 +647,11 @@ console.log('rootscope jaunts',$rootScope.jaunts);
 
     }
 
+    console.log($rootScope.jaunts);
   };
 
-
   $scope.createMap = function(position, zoom) {
+    console.log('create map called');
     var mapOptions = {
       center: position,
       zoom: zoom,
@@ -638,6 +666,109 @@ console.log('rootscope jaunts',$rootScope.jaunts);
 
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
   };
+
+  $scope.centerOnMe = function () {
+    return $q(function(resolve, reject) {
+      if (!$scope.map) {
+        reject('No map loaded');
+      }
+
+      $ionicLoading.show({
+        template: '<i class="ion-loading-c"></i><div>Getting Location</div>',
+        animation: 'fade-in',
+        showBackdrop: false,
+        maxWidth: 200
+      });
+
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        console.log('centerOnMe got pos', pos);
+        $rootScope.pos = pos;
+        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        $ionicLoading.hide();
+        resolve(pos);
+      }, function (error) {
+        reject('Unable to get location: ' + error.message);
+      });
+    });
+  };
+
+
+  $scope.placeUser = function() {
+    console.log('placeUser called')
+    // get position if $rootScope.pos hasn't been set:
+    if (!$rootScope.pos) {
+      console.log('no $rootScope.pos found');
+
+      $ionicLoading.show({
+        template: '<i class="ion-loading-c"></i><div>Getting Location</div>',
+        animation: 'fade-in',
+        showBackdrop: false,
+        maxWidth: 200
+      });
+
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        $rootScope.pos = pos;
+        // format the position for the marker
+        $rootScope.latLng = new google.maps.LatLng($rootScope.pos.coords.latitude, pos.coords.longitude);
+        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        $ionicLoading.hide();
+        $scope.createUserMarker();
+      });
+    } else {
+      console.log('found rootScope.pos in placeUser:', $rootScope.pos);
+      $rootScope.latLng = new google.maps.LatLng($rootScope.pos.coords.latitude, $rootScope.pos.coords.longitude); 
+      $scope.createUserMarker();
+    }
+    $scope.watchId = navigator.geolocation.watchPosition($scope.moveUser); 
+  };
+
+
+  $scope.createUserMarker = function() {
+    console.log('Jaunty created');
+    $scope.userMarker = new google.maps.Marker({
+      position: $rootScope.latLng,
+      map: $scope.map,
+      title: 'You are here',
+      icon: '/img/jaunty_tiny.png',
+    });
+  };
+
+  $scope.moveUser = function() {
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      $rootScope.pos = pos;
+      $rootScope.latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      $scope.userMarker.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude)); 
+    });
+    // Check for a stop nearby when you're within a jaunt started
+    // $scope.checkForStop();
+  };
+
+      // console.log('location updated: ' + $rootScope.pos);
+  $scope.checkForStop = function () {
+    // console.log($rootScope.pos);
+    var userX = $rootScope.pos.D;    // coords.longitude;
+    var userY = $rootScope.pos.k;    // coords.latitude;
+    // console.log('user location:', userX, userY);
+    // $scope.markers
+    for (var i = 0; i < $scope.markers.length; i++) {
+      var stopX = $scope.markers[i].position.D;
+      var stopY = $scope.markers[i].position.k;
+      // console.log('stopover location:', stopX, stopY);
+
+      var degreeDist = Math.sqrt( Math.pow( (userX - stopX), 2 ) + Math.pow( (userY - stopY), 2) ); 
+      // console.log('distance:', degreeDist);
+
+      var meterDist = Jaunts.degreesToMeters(degreeDist);
+      console.log('distance in meters:', meterDist);
+
+      if (meterDist < 40) {
+
+        
+      }
+    }
+  };
+
+
 
 
   if (!$scope.map) {
