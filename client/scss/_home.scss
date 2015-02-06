@@ -54,3 +54,28 @@ div.homeButtons {
   padding-left: 40px;
   padding-right: 40px;
 }
+
+jaunt-item:hover {
+  background-color: #FFB87F;
+}
+
+.col {
+  flex: none;
+}
+
+.col h1 {
+  font-size: 120%;
+}
+
+.bar.bar-header .button, .bar-light button.button.button-clear, .bar.bar-header div.title {
+  text-shadow: 0 1px 1px #5C5C5C;
+  color: white;
+}
+
+.bar.bar-header .button:hover, .bar-light button.button.button-clear:hover, .bar.bar-header div.title.bar-light:hover {
+  color: #444444;
+}
+
+.bar-light button.button.button-icon::before, button.button.back-button .icon.ion-ios7-arrow-back::before {
+  font-size: 155%;
+}
