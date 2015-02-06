@@ -1,34 +1,26 @@
 <ion-view view-title="Jaunts">
   <!-- map view -->
   <ion-nav-buttons side="primary">
-    <a href="#" ng-click="openModal()"><button class="button button-icon icon ion-search">Filter</button></a>
+    <a href="#" ng-click="openModal()"><button class="button button-icon icon ion-ios7-search-strong ion-ios-search-strong">Filter</button></a>
   </ion-nav-buttons>
-  
+
   <ion-nav-buttons side="secondary">
-    <a href="#/tab/map"><button class="button button-icon icon ion-ios7-location"> Map</button></a>
+    <a href="#/tab/map"><button class="button button-icon icon ion-ios7-navigate ion-ios-navigate"> Map</button></a>
   </ion-nav-buttons>
 
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="jaunt in $root.jaunts track by $index" type="item-text-wrap" href="#/tab/jaunts/{{jaunt._id}}">
-        <img src="/img/jaunt-logo.png">  
+      <ion-item class="jaunt-item item-remove-animate item-icon-right" ng-repeat="jaunt in $root.jaunts track by $index" type="item-text-wrap" href="#/tab/jaunts/{{jaunt._id}}">
         <div class="row">
           <div class="col">
-            <h3>{{jaunt.meta.title}}</h3>
+            <h1>{{jaunt.meta.title}}</h1>
             <p>
-              <img src="/img/{{jaunt.meta.rating | number:0}}.png" style="width: 75px;">
-              <small>via {{jaunt.meta.votes}} votes</small>
-            </p>
-            <p>
-              <small>
-                <span class="ion-clock">
-                  {{jaunt.duration.text}} fancying:
-                </span>
-                <span ng-repeat="tag in jaunt.meta.tags track by $index">
-                  {{tag}},
-                </span>
-                 fun stuff
-              </small>
+                <div class="ion-ios7-timer ion-ios-timer">
+                  {{jaunt.duration.text}}
+                </div>
+                <p class="fancies">
+                  fancies: {{jaunt.meta.tags.join(', ')}}
+                </p>
             </p>
           </div>
         </div>
