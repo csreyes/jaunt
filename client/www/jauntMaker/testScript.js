@@ -124,6 +124,10 @@ function Init() {
 
         $("#submitBtn").click(function(){
           var name = $('input[name=business]:checked')[0].id;
+          var yelpId = $('input[name=business]:checked')[0].dataset.yelpid;
+          var displayAddress = $('input[name=business]:checked')[0].dataset.displayaddress;
+          var ratingUrl = $('input[name=business]:checked')[0].dataset.ratingurl;
+          var yelpImage = $('input[name=business]:checked')[0].dataset.imageurl;
           // var name = $('input[name=business]:checked')[0].id;
           if(name === 'other'){
             name = $('#otherText')[0].value;
@@ -137,6 +141,10 @@ function Init() {
           //save the user input in an object
           var stopInfoObj = {
             name: name,
+            yelpId: yelpId,
+            displayAddress: displayAddress,
+            ratingUrl: ratingUrl,
+            yelpImage: yelpImage,
             description: description,
             photoUrl: photoUrl,
             audioUrl: audioUrl,
@@ -242,11 +250,13 @@ var getDirections = function(reqObj){
 
 var obtainStopInfo = function(obj){
   for(var key in obj){
-    $("#modalForm").append("<input type='radio' class='options' id='"+key+"' name='business'/>");
+    $("#modalForm").append("<input type='radio' data-yelpid='"+obj[key].id+"' data-displayAddress='"+obj[key].location.display_address+"' data-ratingUrl='"+obj[key].rating_img_url+"' data-imageUrl='"+obj[key].image_url+"' class='options' id='"+key+"' name='business'/>");
     $("#modalForm").append("<span class='business'><label for='"+key+"'>"+obj[key].name+"</label></span>");
     $("#modalForm").append("<br>");
   }
-  $("#modalForm").append("<input type='radio' id='other' name='business'/>");
+
+  //if the user selects an item that is not in the yelp list, the yelpId will be 'none'
+  $("#modalForm").append("<input type='radio' id='other' name='business' yelpId='none'/>");
   $("#modalForm").append("<span class='business'><label for='other'>Other</label></span>");
   $("#modalForm").append("<br>");
 
